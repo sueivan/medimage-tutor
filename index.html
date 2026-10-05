@@ -1,112 +1,57 @@
 <!doctype html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MedImage Tutor｜医学影像判读学习助手</title>
-<link rel="stylesheet" href="style.css">
-</head>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MedImage Tutor V0.3｜正常脑 MRI 教学版</title><link rel="stylesheet" href="style.css"></head>
 <body>
-<header>
-  <div class="brand">MedImage Tutor</div>
-  <div class="subtitle">医学影像判读学习助手</div>
-  <div class="version">V0.2.1</div>
-</header>
-
+<header><b>MedImage Tutor</b><span>医学影像判读学习助手</span><i>V0.3</i></header>
 <main>
-<section class="hero">
-  <div class="eyebrow">医学影像入门训练</div>
-  <h1>先学会“怎么看”，再学习“是什么”</h1>
-  <p>本版先训练阅片顺序、正常结构、异常发现、病灶定位和影像描述。不要一打开影像就猜病名。</p>
-</section>
+<section class="hero"><small>正常脑 MRI 解剖与系统阅片训练</small><h1>先认识正常，才有能力发现异常</h1>
+<p>本单元不要求诊断疾病。目标是建立脑 MRI 的空间概念、基本解剖识别和固定阅片顺序。</p></section>
 
-<section>
-<h2>第一次使用：完成 5 关</h2>
-<div class="steps">
-  <div><b>01</b><strong>认识阅片器</strong><span>滚片、缩放、方位</span></div>
-  <div><b>02</b><strong>认识正常结构</strong><span>脑室、脑干、小脑</span></div>
-  <div><b>03</b><strong>发现异常</strong><span>先判断有无异常</span></div>
-  <div><b>04</b><strong>定位病灶</strong><span>指出解剖区域</span></div>
-  <div><b>05</b><strong>描述征象</strong><span>最后才考虑诊断</span></div>
-</div>
+<section><h2>本课学习路线</h2><div class="steps">
+<div><b>01</b>方向与滚片</div><div><b>02</b>大脑与脑室</div><div><b>03</b>深部结构</div>
+<div><b>04</b>脑干与小脑</div><div><b>05</b>系统判断正常</div></div></section>
+
+<section class="guide">
+<h2>第一次打开 Viewer？先看这里</h2>
+<div class="cols"><div><h3>DICOM / IDC Viewer</h3>
+<ol><li>等待左侧出现影像缩略图。</li><li>右侧空白时，双击影像序列缩略图；仍不显示，可把缩略图拖到右侧阅片区。</li><li>鼠标滚轮连续浏览切片，不要只看一张。</li><li>初学阶段优先选择 MRI 图像序列。</li><li>看到 RTSTRUCT、RTDOSE、RTPLAN 时先不要点，它们是放疗相关数据。</li></ol></div>
+<div><h3>NIfTI / OpenNeuro</h3><p>V0.3 的健康脑 MRI 来自 OpenNeuro，主要采用 NIfTI/BIDS，而不是放疗 DICOM。点击下方数据入口后选择 T1w 解剖像。本版先训练结构识别；后续版本再把 NIfTI 阅片器直接嵌入本站。</p></div></div>
+<details><summary>打开后仍然空白怎么办？</summary><p><b>左侧有缩略图：</b>双击或拖入主视窗。　<b>左侧也没有：</b>刷新页面后重试。　<b>仍失败：</b>先返回 MedImage Tutor，不要一直等待；记录病例/数据集名称以便排查。</p></details>
 </section>
 
 <section class="case">
-<div class="case-top">
-  <div>
-    <span class="pill">病例 01 · MRI 入门</span>
-    <h2>脑 MRI：从“找到异常”开始</h2>
-    <p class="muted">开放影像来源：IDC / TCIA · Vestibular-Schwannoma-SEG</p>
-  </div>
-  <a class="primary" target="_blank" rel="noopener" href="https://viewer.imaging.datacommons.cancer.gov/viewer/1.3.6.1.4.1.14519.5.2.1.267424821384663813780850856506829388886">打开影像阅片 →</a>
-</div>
-
-<div class="instruction">
-<strong>阅片前不要看答案。</strong>
-<p>打开影像后先花 2–3 分钟自由浏览。第一次加载可能较慢。完成下面任务后再提交。</p>
-</div>
-
-<div class="lesson">
-<h3>第 1 关｜认识阅片器</h3>
-<div class="check"><label><input type="checkbox" id="c1"> 我能用鼠标/滚轮连续浏览不同层面</label></div>
-<div class="check"><label><input type="checkbox" id="c2"> 我能找到缩放或调整视图的工具</label></div>
-<p class="tip">目标不是记按钮，而是能前后连续查看影像，避免只凭单张切片判断。</p>
-</div>
-
-<div class="lesson">
-<h3>第 2 关｜先找正常结构</h3>
-<p>在影像中尝试辨认：<strong>脑干、小脑、第四脑室、桥小脑角区域</strong>。暂时不要猜诊断。</p>
-</div>
-
-<form id="quiz">
-<div class="lesson">
-<h3>第 3 关｜发现异常</h3>
-<p class="q">你是否发现明确的局灶性异常？</p>
-<label><input type="radio" name="q1" value="发现"> 发现</label>
-<label><input type="radio" name="q1" value="未发现"> 未发现</label>
-<label><input type="radio" name="q1" value="不能确定"> 不能确定</label>
-</div>
-
-<div class="lesson">
-<h3>第 4 关｜定位病灶</h3>
-<p class="q">异常主要位于哪个区域？</p>
-<label><input type="radio" name="q2" value="桥小脑角/内听道区域"> 桥小脑角 / 内听道区域</label>
-<label><input type="radio" name="q2" value="大脑半球皮质"> 大脑半球皮质</label>
-<label><input type="radio" name="q2" value="基底节区"> 基底节区</label>
-<label><input type="radio" name="q2" value="脑室系统"> 脑室系统</label>
-<label><input type="radio" name="q2" value="不能确定"> 不能确定</label>
-</div>
-
-<div class="lesson">
-<h3>第 5 关｜描述，而不是抢答病名</h3>
-<p class="q">初学者发现异常后，下一步最合理的是：</p>
-<label><input type="radio" name="q3" value="描述"> 描述位置、边界及邻近结构，再考虑诊断</label>
-<label><input type="radio" name="q3" value="猜病名"> 根据第一眼直接猜病名</label>
-<label><input type="radio" name="q3" value="看答案"> 立即查看标准答案</label>
-<textarea id="desc" placeholder="用自己的话写 1–2 句影像描述，例如：我在……区域看到……，与……结构相邻。"></textarea>
-</div>
-
-<button class="primary button" type="submit">提交判读并解锁专家解析</button>
-</form>
-
-<div id="result" class="result">
-<h2>专家解析</h2>
-<div id="score"></div>
-<p><strong>本例训练重点：</strong>先确认存在局灶性异常，再进行解剖定位。异常位于桥小脑角 / 内听道相关区域。初学阶段应先描述位置、范围及与邻近结构的关系，再进入具体鉴别诊断。</p>
-<p class="warning">这不是“背病名题”。如果第一次没有找到病灶，请重新打开影像，从脑干、小脑和桥小脑角开始逐层比较。</p>
-<a class="primary" target="_blank" rel="noopener" href="https://viewer.imaging.datacommons.cancer.gov/viewer/1.3.6.1.4.1.14519.5.2.1.267424821384663813780850856506829388886">带着解析再次阅片 →</a>
-</div>
+<span class="tag">正常脑 MRI · T1w</span><h2>训练病例 N01｜健康成人结构 MRI</h2>
+<p>教学数据采用 OpenNeuro 的健康受试者开放数据。先进入数据集，再打开受试者的 <b>T1w anatomical MRI</b>。本课只把它作为正常解剖训练材料，不作临床诊断用途。</p>
+<a class="btn" target="_blank" rel="noopener" href="https://openneuro.org/datasets/ds000243">打开正常脑 MRI 数据 →</a>
+<p class="hint">数据集：Washington University 120。公开资料说明受试者为典型年轻成人，无显著神经或精神病史，并提供 T1 加权 MP-RAGE 解剖像。</p>
 </section>
 
-<section class="next">
-<h2>下一阶段</h2>
-<p>完成这一例后，后续版本再加入正常脑 MRI、序列识别、脑梗死 DWI/ADC、脑肿瘤及头颅 CT。当前版本先验证“学生是否真的知道怎么学”。</p>
+<section>
+<h2>跟着我阅片</h2>
+<div class="task"><b>任务 1｜先建立方向</b><p>连续滚动整套 T1w。不要停在“最好看”的一层。观察从头顶部向颅底移动时，脑结构如何逐渐出现和消失。</p><label><input type="checkbox"> 我已完整滚动过一次影像</label></div>
+<div class="task"><b>任务 2｜找到脑室系统</b><p>寻找侧脑室，再尝试找到第三脑室和第四脑室。注意脑室应结合左右对称性和中线位置观察。</p><label><input type="checkbox"> 我能大致指出侧脑室</label></div>
+<div class="task"><b>任务 3｜寻找深部结构</b><p>在侧脑室附近辨认基底节区和丘脑。现阶段不要求精细核团分界，先建立“皮质—深部灰质—脑室”的空间关系。</p></div>
+<div class="task"><b>任务 4｜向下看到脑干和小脑</b><p>继续滚片，辨认中脑、脑桥、延髓、小脑和第四脑室所在区域。</p></div>
+<div class="task"><b>任务 5｜最后才回答：正常吗？</b><p>不要只写“正常”。先检查左右对称、中线、脑室、局灶异常以及颅后窝，再作整体判断。</p></div>
 </section>
+
+<section><h2>无提示自测</h2><form id="quiz">
+<div class="q"><b>1. 判断脑 MRI 是否存在明显占位效应时，首先应同时观察什么？</b>
+<label><input type="radio" name="q1" value="a"> 左右对称性、中线及脑室形态</label>
+<label><input type="radio" name="q1" value="b"> 只看一张最清楚的切片</label><label><input type="radio" name="q1" value="c"> 先猜病名</label></div>
+<div class="q"><b>2. 阅片时为什么要连续滚动整套影像？</b>
+<label><input type="radio" name="q2" value="a"> 建立三维连续关系，避免单层误判</label>
+<label><input type="radio" name="q2" value="b"> 只是为了让影像动起来</label></div>
+<div class="q"><b>3. 正常脑 MRI 的系统判断应该包括：</b>
+<label><input type="radio" name="q3" value="a"> 对称性、中线、脑室、局灶异常和颅后窝</label>
+<label><input type="radio" name="q3" value="b"> 只判断有没有肿瘤</label></div>
+<textarea id="note" placeholder="请写一句完整的正常阅片描述：例如“左右……，中线……，脑室……，未见……”"></textarea>
+<button class="btn" type="submit">提交并查看学习解析</button></form>
+<div id="result"><h3>系统阅片模板</h3><p>先看左右是否大致对称；再看中线有无偏移；观察脑室系统形态与位置；逐层寻找局灶性异常；最后检查脑干、小脑及颅后窝。只有完成这些观察后，才形成“未见明显异常”的整体判断。</p><p id="score"></p>
+<p><b>下一课 V0.4：</b>T1、T2、FLAIR、DWI、ADC、SWI 的序列识别与用途。</p></div></section>
+
+<section class="source"><h2>数据来源与教学边界</h2>
+<p>正常训练数据入口采用 OpenNeuro Washington University 120（ds000243）。OpenNeuro 页面说明该数据集提供 120 组 MRI，每名受试者包含 T1w MP-RAGE，受试者报告无显著神经或精神病史。MedImage Tutor 不把研究数据重新解释为临床“检查正常”，而是将其用于正常解剖教学。</p></section>
 </main>
-
-<footer>
-<strong>软件开发：苏裕盛 教授 / 医学博士</strong>
-<div>支持单位：宁德师范学院医学院</div>
-<p>仅供医学教育与影像判读训练，不用于临床诊断、治疗决策或患者个体化医疗建议。</p>
-</footer>
-<script src="app.js"></script>
-</body></html>
+<footer><strong>软件开发：苏裕盛 教授 / 医学博士</strong><div>支持单位：宁德师范学院医学院</div><p>仅供医学教育与影像判读训练，不用于临床诊断、治疗决策或患者个体化医疗建议。</p></footer>
+<script src="app.js"></script></body></html>
