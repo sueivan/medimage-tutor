@@ -1,1 +1,112 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MedImage Tutor｜医学影像判读学习助手</title><link rel="stylesheet" href="style.css"></head><body><header><b>MedImage Tutor</b><span>医学影像判读学习助手</span></header><main><section class="hero"><i>V0.2 · 教学原型</i><h1>不是看答案，而是学习如何阅片</h1><p>按“先阅片 → 自己判断 → 提交 → 专家解析 → 再阅片”的顺序完成病例。影像从开放医学影像数据库远程加载。</p></section><section><h2>第一次使用？按这 5 步学习</h2><div class="steps"><div><b>1</b>读学习目标</div><div><b>2</b>打开影像独立阅片</div><div><b>3</b>返回完成判断</div><div><b>4</b>提交查看解析</div><div><b>5</b>带着错误再次阅片</div></div></section><section id="case">病例载入中……</section></main><footer><strong>软件开发：苏裕盛 教授 / 医学博士</strong><br>支持单位：宁德师范学院医学院<p>仅供医学教育与影像判读训练，不用于临床诊断、治疗决策或患者个体化医疗建议。</p></footer><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MedImage Tutor｜医学影像判读学习助手</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="brand">MedImage Tutor</div>
+  <div class="subtitle">医学影像判读学习助手</div>
+  <div class="version">V0.2.1</div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="eyebrow">医学影像入门训练</div>
+  <h1>先学会“怎么看”，再学习“是什么”</h1>
+  <p>本版先训练阅片顺序、正常结构、异常发现、病灶定位和影像描述。不要一打开影像就猜病名。</p>
+</section>
+
+<section>
+<h2>第一次使用：完成 5 关</h2>
+<div class="steps">
+  <div><b>01</b><strong>认识阅片器</strong><span>滚片、缩放、方位</span></div>
+  <div><b>02</b><strong>认识正常结构</strong><span>脑室、脑干、小脑</span></div>
+  <div><b>03</b><strong>发现异常</strong><span>先判断有无异常</span></div>
+  <div><b>04</b><strong>定位病灶</strong><span>指出解剖区域</span></div>
+  <div><b>05</b><strong>描述征象</strong><span>最后才考虑诊断</span></div>
+</div>
+</section>
+
+<section class="case">
+<div class="case-top">
+  <div>
+    <span class="pill">病例 01 · MRI 入门</span>
+    <h2>脑 MRI：从“找到异常”开始</h2>
+    <p class="muted">开放影像来源：IDC / TCIA · Vestibular-Schwannoma-SEG</p>
+  </div>
+  <a class="primary" target="_blank" rel="noopener" href="https://viewer.imaging.datacommons.cancer.gov/viewer/1.3.6.1.4.1.14519.5.2.1.267424821384663813780850856506829388886">打开影像阅片 →</a>
+</div>
+
+<div class="instruction">
+<strong>阅片前不要看答案。</strong>
+<p>打开影像后先花 2–3 分钟自由浏览。第一次加载可能较慢。完成下面任务后再提交。</p>
+</div>
+
+<div class="lesson">
+<h3>第 1 关｜认识阅片器</h3>
+<div class="check"><label><input type="checkbox" id="c1"> 我能用鼠标/滚轮连续浏览不同层面</label></div>
+<div class="check"><label><input type="checkbox" id="c2"> 我能找到缩放或调整视图的工具</label></div>
+<p class="tip">目标不是记按钮，而是能前后连续查看影像，避免只凭单张切片判断。</p>
+</div>
+
+<div class="lesson">
+<h3>第 2 关｜先找正常结构</h3>
+<p>在影像中尝试辨认：<strong>脑干、小脑、第四脑室、桥小脑角区域</strong>。暂时不要猜诊断。</p>
+</div>
+
+<form id="quiz">
+<div class="lesson">
+<h3>第 3 关｜发现异常</h3>
+<p class="q">你是否发现明确的局灶性异常？</p>
+<label><input type="radio" name="q1" value="发现"> 发现</label>
+<label><input type="radio" name="q1" value="未发现"> 未发现</label>
+<label><input type="radio" name="q1" value="不能确定"> 不能确定</label>
+</div>
+
+<div class="lesson">
+<h3>第 4 关｜定位病灶</h3>
+<p class="q">异常主要位于哪个区域？</p>
+<label><input type="radio" name="q2" value="桥小脑角/内听道区域"> 桥小脑角 / 内听道区域</label>
+<label><input type="radio" name="q2" value="大脑半球皮质"> 大脑半球皮质</label>
+<label><input type="radio" name="q2" value="基底节区"> 基底节区</label>
+<label><input type="radio" name="q2" value="脑室系统"> 脑室系统</label>
+<label><input type="radio" name="q2" value="不能确定"> 不能确定</label>
+</div>
+
+<div class="lesson">
+<h3>第 5 关｜描述，而不是抢答病名</h3>
+<p class="q">初学者发现异常后，下一步最合理的是：</p>
+<label><input type="radio" name="q3" value="描述"> 描述位置、边界及邻近结构，再考虑诊断</label>
+<label><input type="radio" name="q3" value="猜病名"> 根据第一眼直接猜病名</label>
+<label><input type="radio" name="q3" value="看答案"> 立即查看标准答案</label>
+<textarea id="desc" placeholder="用自己的话写 1–2 句影像描述，例如：我在……区域看到……，与……结构相邻。"></textarea>
+</div>
+
+<button class="primary button" type="submit">提交判读并解锁专家解析</button>
+</form>
+
+<div id="result" class="result">
+<h2>专家解析</h2>
+<div id="score"></div>
+<p><strong>本例训练重点：</strong>先确认存在局灶性异常，再进行解剖定位。异常位于桥小脑角 / 内听道相关区域。初学阶段应先描述位置、范围及与邻近结构的关系，再进入具体鉴别诊断。</p>
+<p class="warning">这不是“背病名题”。如果第一次没有找到病灶，请重新打开影像，从脑干、小脑和桥小脑角开始逐层比较。</p>
+<a class="primary" target="_blank" rel="noopener" href="https://viewer.imaging.datacommons.cancer.gov/viewer/1.3.6.1.4.1.14519.5.2.1.267424821384663813780850856506829388886">带着解析再次阅片 →</a>
+</div>
+</section>
+
+<section class="next">
+<h2>下一阶段</h2>
+<p>完成这一例后，后续版本再加入正常脑 MRI、序列识别、脑梗死 DWI/ADC、脑肿瘤及头颅 CT。当前版本先验证“学生是否真的知道怎么学”。</p>
+</section>
+</main>
+
+<footer>
+<strong>软件开发：苏裕盛 教授 / 医学博士</strong>
+<div>支持单位：宁德师范学院医学院</div>
+<p>仅供医学教育与影像判读训练，不用于临床诊断、治疗决策或患者个体化医疗建议。</p>
+</footer>
+<script src="app.js"></script>
+</body></html>

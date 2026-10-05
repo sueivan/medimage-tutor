@@ -1,1 +1,22 @@
-fetch('cases/case01.json').then(r=>r.json()).then(c=>{let b=document.getElementById('case');b.innerHTML=`<div class="muted">${c.modality} · ${c.collection}</div><h2>${c.title}</h2><h3>学习目标</h3><ul>${c.objectives.map(x=>`<li>${x}</li>`).join('')}</ul><a class="viewer" href="${c.viewer}" target="_blank">开始阅片 →</a><p class="muted">首次加载可能较慢。阅片后回到本页作答，不要先看答案。</p><h3>你的判读</h3><form id="quiz">${c.questions.map(q=>`<div class="question"><strong>${q.text}</strong>${q.options.map(o=>`<label><input type="radio" name="${q.id}" value="${o}"> ${o}</label>`).join('')}</div>`).join('')}<button class="submit">提交判断并查看解析</button></form><div id="result" class="result"></div>`;document.getElementById('quiz').onsubmit=e=>{e.preventDefault();let score=0,rows=[];for(const q of c.questions){let x=document.querySelector(`input[name="${q.id}"]:checked`);if(!x){alert('请先完成全部判断。');return}let ok=x.value===c.answers[q.id];score+=ok;rows.push(`<p class="${ok?'ok':'bad'}">${ok?'✓':'✗'} ${q.text}<br><small>你的答案：${x.value}${ok?'':`；建议：${c.answers[q.id]}`}</small></p>`)}let r=document.getElementById('result');r.classList.add('show');r.innerHTML=`<h3>本次 ${score}/${c.questions.length}</h3>${rows.join('')}<h3>专家解析</h3><p>${c.explanation}</p><a class="viewer" href="${c.viewer}" target="_blank">带着解析再次阅片 →</a>`;r.scrollIntoView({behavior:'smooth'})}});
+document.getElementById("quiz").addEventListener("submit",function(e){
+ e.preventDefault();
+ const get=n=>document.querySelector(`input[name="${n}"]:checked`);
+ const q1=get("q1"),q2=get("q2"),q3=get("q3");
+ if(!q1||!q2||!q3){alert("请先完成第 3–5 关的选择题，再查看专家解析。");return;}
+ let score=0, rows=[];
+ const tests=[
+  ["发现异常",q1.value,"发现"],
+  ["病灶定位",q2.value,"桥小脑角/内听道区域"],
+  ["阅片顺序",q3.value,"描述"]
+ ];
+ tests.forEach(([name,val,ans])=>{
+   const ok=val===ans; if(ok)score++;
+   rows.push(`<p class="${ok?"good":"bad"}">${ok?"✓":"✗"} ${name}：${ok?"正确":"需要复习"}</p>`);
+ });
+ const desc=document.getElementById("desc").value.trim();
+ const result=document.getElementById("result");
+ document.getElementById("score").innerHTML=`<h3>本次基础判读：${score}/3</h3>${rows.join("")}${desc?`<p><strong>你的影像描述：</strong>${escapeHtml(desc)}</p>`:"<p class='bad'>你还没有写自己的影像描述。下一次建议补写。</p>"}`;
+ result.classList.add("show");
+ result.scrollIntoView({behavior:"smooth"});
+});
+function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
