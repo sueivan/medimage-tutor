@@ -1,0 +1,7 @@
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans SC",sans-serif;background:#f5f7fa;color:#172033}
+header{background:#101827;color:#fff;padding:22px max(5vw,24px)}header strong{font-size:22px}header span{opacity:.7}header p{margin:6px 0 0;color:#b9c4d6}
+main{max-width:1100px;margin:auto;padding:42px 24px}.intro h1{font-size:34px;margin:0 0 12px}.intro p{color:#526079}.notice{margin:22px 0;padding:14px 16px;background:#fff5d9;border:1px solid #ead596;border-radius:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px}.card{background:white;border:1px solid #dde3ec;border-radius:16px;padding:20px;box-shadow:0 6px 24px rgba(20,35,60,.05)}
+.badge{display:inline-block;font-size:12px;padding:5px 9px;border-radius:999px;background:#e8f5ec;color:#176334}.pending{background:#f2f3f5;color:#666}
+.card h3{margin:14px 0 8px}.meta{font-size:13px;color:#6a7485;line-height:1.7}.purpose{min-height:48px}.btn{display:inline-block;margin-top:12px;padding:11px 14px;border-radius:10px;background:#172033;color:white;text-decoration:none}.btn.disabled{background:#adb4bf;pointer-events:none}
+.test{margin-top:34px;background:#fff;padding:22px;border-radius:16px;border:1px solid #dde3ec}.test li{margin:8px 0}footer{text-align:center;color:#7b8493;padding:24px}

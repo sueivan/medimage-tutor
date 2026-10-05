@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MedImage Tutor V0.1</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div><strong>MedImage Tutor</strong><span> V0.1 技术验证</span></div>
+  <p>GitHub Pages 轻前端 · IDC 云端影像 · 不在本站存储 DICOM</p>
+</header>
+<main>
+<section class="intro">
+<h1>远程 CT / MRI 阅片验证</h1>
+<p>当前只验证最关键链路：病例索引 → IDC → 浏览器阅片。暂不加入 AI、账号与成绩系统。</p>
+<div class="notice">建议使用 Chrome / Firefox。首次加载速度取决于 IDC 与当前网络环境。</div>
+</section>
+<section id="cards" class="grid"></section>
+<section class="test">
+<h2>请记录四项测试结果</h2>
+<ol>
+<li>首次打开病例需要多少秒？</li>
+<li>连续滚动切片是否流畅？</li>
+<li>MRI 序列/viewport 是否可以正常切换？</li>
+<li>带标注病例是否能看到结构轮廓/标注对象？</li>
+</ol>
+</section>
+</main>
+<footer>仅用于医学影像教学技术验证，不用于临床诊断。</footer>
+<script src="app.js"></script>
+</body>
+</html>
