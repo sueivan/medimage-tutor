@@ -1,56 +1,14 @@
-<!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MedImage Tutor V0.3.1｜内置正常脑 MRI 阅片版</title>
-<link rel="stylesheet" href="https://unpkg.com/papaya-viewer@1.0.1455/release/current/standard/papaya.css">
-<link rel="stylesheet" href="style.css">
-<script>
-var params=[];
-params["images"]=["https://www.mangoviewer.com/data/sample_image.nii.gz"];
-params["worldSpace"]=true; params["showOrientation"]=true; params["radiological"]=true;
-params["orthogonal"]=true; params["allowScroll"]=true; params["showControlBar"]=true;
-params["noNewFiles"]=false;
-params["loadingComplete"]=function(){document.getElementById("viewerStatus").textContent="影像已载入：可在图像上滚轮换层，点击不同平面定位。";};
-</script>
-<script src="https://unpkg.com/papaya-viewer@1.0.1455/release/current/standard/papaya.js"></script>
-</head><body>
-<header><b>MedImage Tutor</b><span>医学影像判读学习助手</span><i>V0.3.1</i></header>
-<main>
-<section class="hero"><small>内置正常脑 MRI 阅片训练</small><h1>影像就在课程里，不再先跳到专业工作站</h1>
-<p>本版把 NIfTI 阅片器直接放进教学页面。先滚片、找结构、形成正常脑空间概念，再进入序列识别和异常判读。</p></section>
-
-<section class="workspace">
-<div class="viewerPanel">
-<div class="panelHead"><div><b>教学阅片器</b><span>T1 标准脑 MRI · NIfTI</span></div><span class="badge">默认教学入口</span></div>
-<div id="viewerStatus" class="status">正在载入影像。首次载入取决于网络速度；若超过约30秒仍无图像，请使用下方“本地载入备用方案”。</div>
-<div class="papaya" data-params="params"></div>
-<details><summary>影像仍然空白？</summary>
-<p>① 刷新一次页面；② 确认浏览器没有拦截脚本；③ 仍失败时点击 Papaya 的文件打开功能，选择本地 <code>.nii</code> 或 <code>.nii.gz</code>。这样即使远程影像源暂时不可达，教学阅片器本身仍可使用。</p>
-</details>
-</div>
-
-<aside>
-<h2>跟着我看</h2>
-<div class="lesson active"><b>01｜先完整滚一遍</b><p>把鼠标放在影像上滚动。不要只停在一层。观察脑结构从顶部到颅底如何连续变化。</p><label><input type="checkbox"> 已完整浏览一次</label></div>
-<div class="lesson"><b>02｜找侧脑室</b><p>先找左右对称的脑室系统。不要急着辨认每个核团。</p><button data-tip="tip1">显示提示</button><p id="tip1" class="tip">提示：从轴位中部层面寻找成对的低信号脑脊液腔隙，并同时看中线是否居中。</p></div>
-<div class="lesson"><b>03｜找丘脑与深部灰质</b><p>建立“皮质—深部灰质—脑室”的空间关系。</p></div>
-<div class="lesson"><b>04｜继续向下</b><p>依次寻找中脑、脑桥、延髓、小脑和第四脑室区域。</p></div>
-<div class="lesson"><b>05｜系统判断</b><p>正常不是一句“没看到病”。检查对称性、中线、脑室、局灶异常和颅后窝后再作整体判断。</p></div>
-</aside>
-</section>
-
-<section>
-<h2>无提示自测</h2><form id="quiz">
-<div class="q"><b>1. 判断占位效应首先应同时观察：</b><label><input type="radio" name="q1" value="a"> 左右对称、中线与脑室</label><label><input type="radio" name="q1" value="b"> 只看单张切片</label></div>
-<div class="q"><b>2. 连续滚片的主要目的：</b><label><input type="radio" name="q2" value="a"> 建立三维连续关系并减少单层误判</label><label><input type="radio" name="q2" value="b"> 只是让影像动起来</label></div>
-<div class="q"><b>3. 系统正常判断至少应包括：</b><label><input type="radio" name="q3" value="a"> 对称性、中线、脑室、局灶异常、颅后窝</label><label><input type="radio" name="q3" value="b"> 只判断有无肿瘤</label></div>
-<textarea placeholder="写一句自己的系统阅片描述：左右……；中线……；脑室……；未见……"></textarea>
-<button class="primary" type="submit">提交并查看解析</button></form>
-<div id="result"><h3>系统阅片模板</h3><p>先看左右对称性，再看中线；观察脑室系统形态和位置；连续逐层寻找局灶异常；最后检查脑干、小脑和颅后窝。完成这些步骤后，再形成整体判断。</p><p id="score"></p></div>
-</section>
-
-<section class="source"><h2>关于本版影像</h2>
-<p>V0.3.1 的默认内置影像使用 Mango/Papaya 提供的 T1 标准示例脑影像，用于验证“网页内直接阅片”的教学流程；它是标准/示例影像，不冒充某位经临床确认的“正常患者”。后续稳定后再替换为经过授权核验的健康受试者教学病例。</p>
-<p><a target="_blank" rel="noopener" href="https://openneuro.org/datasets/ds000243">健康受试者原始数据（进阶/来源核验）</a></p></section>
-</main>
-<footer><strong>软件开发：苏裕盛 教授 / 医学博士</strong><div>支持单位：宁德师范学院医学院</div><p>仅供医学教育与影像判读训练，不用于临床诊断、治疗决策或患者个体化医疗建议。</p></footer>
-<script src="app.js"></script></body></html>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MedImage Tutor V0.3.2｜本地影像稳定版</title>
+<link rel="stylesheet" href="https://unpkg.com/papaya-viewer@1.0.1455/release/current/standard/papaya.css"><link rel="stylesheet" href="style.css">
+<script>var params=[];params["images"]=["data/teaching-brain-phantom.nii.gz"];params["worldSpace"]=true;params["showOrientation"]=true;params["orthogonal"]=true;params["allowScroll"]=true;params["showControlBar"]=true;params["loadingComplete"]=function(){document.getElementById("status").innerHTML="✓ 本地影像已载入。现在可滚轮换层、查看轴位/冠状位/矢状位。";document.getElementById("status").className="status ok";};</script>
+<script src="https://unpkg.com/papaya-viewer@1.0.1455/release/current/standard/papaya.js"></script></head><body>
+<header><b>MedImage Tutor</b><span>医学影像判读学习助手</span><i>V0.3.2</i></header><main>
+<section class="hero"><small>本地影像稳定版</small><h1>先解决“影像一定能打开”</h1><p>影像文件与网站同源，不再跨站读取 MRI 文件。本版首先验证稳定滚片流程。</p></section>
+<section class="notice"><b>重要：</b>当前内置的是<strong>教学仿真脑影像（phantom）</strong>，用于验证本地 NIfTI 加载、滚片和教学交互；它不是患者 MRI，也不能用于学习真实脑组织信号。下一步将以许可核验后的真实健康成人 T1 MRI 替换，页面结构无需再改。</section>
+<section class="workspace"><div><h2>教学阅片器</h2><div id="status" class="status">正在从本站 <code>data/</code> 目录载入影像……</div><div class="papaya" data-params="params"></div>
+<details><summary>仍然空白怎么办？</summary><p>本版 MRI 文件就在本站。如果 Papaya 菜单已经出现但影像不显示，优先检查浏览器是否拦截 unpkg 的 Papaya 脚本。影像本身不再依赖第三方跨域下载。</p></details></div>
+<aside><h2>跟着我看</h2><div class="lesson"><b>01｜滚动切片</b><p>鼠标放在影像上滚动，确认切片连续变化。</p></div><div class="lesson"><b>02｜三个平面</b><p>分别观察 Axial、Coronal、Sagittal。</p></div><div class="lesson"><b>03｜认识“教学仿真”边界</b><p>可练操作和空间方向，不把仿真结构当成真实 MRI 解剖细节。</p></div><div class="lesson"><b>04｜真实病例阶段</b><p>接入健康成人 T1 后，再正式训练侧脑室、丘脑、基底节、脑干和小脑。</p></div></aside></section>
+<section><h2>稳定版验收</h2><div class="checks"><label><input type="checkbox"> 页面内直接出现影像</label><label><input type="checkbox"> 鼠标滚轮可换层</label><label><input type="checkbox"> 三个正交平面均可查看</label><label><input type="checkbox"> 不再出现 sample_image.nii.gz / Response status = 0</label></div></section>
+<section class="source"><h2>为什么暂时使用教学仿真影像？</h2><p>此前错误来自跨站读取。V0.3.2 先把“同源影像加载”做成可验证的稳定底座。真实教学数据必须同时满足健康受试者定义、授权允许再分发、去标识/去面部以及可稳定托管，不能为了让页面有图而随意复制网络 MRI。</p></section>
+</main><footer><strong>软件开发：苏裕盛 教授 / 医学博士</strong><div>支持单位：宁德师范学院医学院</div><p>仅供医学教育与影像判读训练，不用于临床诊断、治疗决策或患者个体化医疗建议。</p></footer></body></html>

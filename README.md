@@ -1,16 +1,15 @@
-# MedImage Tutor V0.3.1｜内置正常脑 MRI 阅片版
+# MedImage Tutor V0.3.2｜本地影像稳定版
 
-## 核心改变
-- 不再把 IDC/NIH Viewer 作为初学者唯一入口。
-- Papaya Viewer 直接嵌入 MedImage Tutor。
-- 默认加载 Mango/Papaya T1 标准示例脑 NIfTI。
-- 右侧同步提供“滚片→找脑室→深部结构→脑干/小脑→系统判断”的教学任务。
-- 保留空白屏处理和本地 NIfTI 备用载入路径。
+## 修复
+V0.3.1 的 sample_image.nii.gz 来自外站，浏览器返回 Response status = 0。
+V0.3.2 将 NIfTI 文件放在本站 data/ 目录，与 GitHub Pages 同源加载。
 
-## 重要说明
-默认示例是标准/示例 T1 脑影像，用于验证内置 Viewer 和正常解剖教学流程；不表述为某位临床受试者“影像学正常”。
+## 当前影像
+data/teaching-brain-phantom.nii.gz 是本项目生成的教学仿真体数据，仅用于验证 Viewer、滚片、三平面和同源加载。
+它不是患者 MRI，也不作为真实脑解剖教材。
 
-## 部署
-覆盖 GitHub Pages 根目录的 index.html、style.css、app.js。
-本版运行时需要网络访问 unpkg（Papaya JS/CSS）和 mangoviewer.com（示例 NIfTI）。
-若中国大陆课堂访问不稳定，下一阶段应把 Papaya 静态资源和获准再分发的教学 NIfTI 一并托管到可稳定访问的对象存储/CDN。
+## 下一步
+稳定性确认后，用许可允许再分发、去标识且来源可核验的真实健康成人 T1 MRI 替换该文件。
+
+## 上传
+必须把 data 文件夹一起上传，不能只上传三个网页文件。
