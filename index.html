@@ -1,14 +1,94 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MedImage Tutor V0.3.2｜本地影像稳定版</title>
-<link rel="stylesheet" href="https://unpkg.com/papaya-viewer@1.0.1455/release/current/standard/papaya.css"><link rel="stylesheet" href="style.css">
-<script>var params=[];params["images"]=["data/teaching-brain-phantom.nii.gz"];params["worldSpace"]=true;params["showOrientation"]=true;params["orthogonal"]=true;params["allowScroll"]=true;params["showControlBar"]=true;params["loadingComplete"]=function(){document.getElementById("status").innerHTML="✓ 本地影像已载入。现在可滚轮换层、查看轴位/冠状位/矢状位。";document.getElementById("status").className="status ok";};</script>
-<script src="https://unpkg.com/papaya-viewer@1.0.1455/release/current/standard/papaya.js"></script></head><body>
-<header><b>MedImage Tutor</b><span>医学影像判读学习助手</span><i>V0.3.2</i></header><main>
-<section class="hero"><small>本地影像稳定版</small><h1>先解决“影像一定能打开”</h1><p>影像文件与网站同源，不再跨站读取 MRI 文件。本版首先验证稳定滚片流程。</p></section>
-<section class="notice"><b>重要：</b>当前内置的是<strong>教学仿真脑影像（phantom）</strong>，用于验证本地 NIfTI 加载、滚片和教学交互；它不是患者 MRI，也不能用于学习真实脑组织信号。下一步将以许可核验后的真实健康成人 T1 MRI 替换，页面结构无需再改。</section>
-<section class="workspace"><div><h2>教学阅片器</h2><div id="status" class="status">正在从本站 <code>data/</code> 目录载入影像……</div><div class="papaya" data-params="params"></div>
-<details><summary>仍然空白怎么办？</summary><p>本版 MRI 文件就在本站。如果 Papaya 菜单已经出现但影像不显示，优先检查浏览器是否拦截 unpkg 的 Papaya 脚本。影像本身不再依赖第三方跨域下载。</p></details></div>
-<aside><h2>跟着我看</h2><div class="lesson"><b>01｜滚动切片</b><p>鼠标放在影像上滚动，确认切片连续变化。</p></div><div class="lesson"><b>02｜三个平面</b><p>分别观察 Axial、Coronal、Sagittal。</p></div><div class="lesson"><b>03｜认识“教学仿真”边界</b><p>可练操作和空间方向，不把仿真结构当成真实 MRI 解剖细节。</p></div><div class="lesson"><b>04｜真实病例阶段</b><p>接入健康成人 T1 后，再正式训练侧脑室、丘脑、基底节、脑干和小脑。</p></div></aside></section>
-<section><h2>稳定版验收</h2><div class="checks"><label><input type="checkbox"> 页面内直接出现影像</label><label><input type="checkbox"> 鼠标滚轮可换层</label><label><input type="checkbox"> 三个正交平面均可查看</label><label><input type="checkbox"> 不再出现 sample_image.nii.gz / Response status = 0</label></div></section>
-<section class="source"><h2>为什么暂时使用教学仿真影像？</h2><p>此前错误来自跨站读取。V0.3.2 先把“同源影像加载”做成可验证的稳定底座。真实教学数据必须同时满足健康受试者定义、授权允许再分发、去标识/去面部以及可稳定托管，不能为了让页面有图而随意复制网络 MRI。</p></section>
-</main><footer><strong>软件开发：苏裕盛 教授 / 医学博士</strong><div>支持单位：宁德师范学院医学院</div><p>仅供医学教育与影像判读训练，不用于临床诊断、治疗决策或患者个体化医疗建议。</p></footer></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MedImage Tutor V0.3.3｜真实正常脑 MRI 教学版</title>
+<link rel="stylesheet" href="https://unpkg.com/papaya-viewer@1.0.1455/release/current/standard/papaya.css">
+<link rel="stylesheet" href="style.css">
+<script>
+var params = [];
+params["images"] = ["data/healthy-adult-t1w.nii.gz"];
+params["worldSpace"] = true;
+params["showOrientation"] = true;
+params["orthogonal"] = true;
+params["allowScroll"] = true;
+params["showControlBar"] = true;
+params["radiological"] = true;
+params["loadingComplete"] = function () {
+  var s=document.getElementById("status");
+  if(s){s.innerHTML="✓ 真实健康成人 T1w MRI 已载入。可滚轮换层，并观察轴位、冠状位、矢状位。";s.className="status ok";}
+};
+</script>
+<script src="https://unpkg.com/papaya-viewer@1.0.1455/release/current/standard/papaya.js"></script>
+</head>
+<body>
+<header>
+  <b>MedImage Tutor</b><span>医学影像判读学习助手</span><i>V0.3.3</i>
+</header>
+<main>
+<section class="hero">
+  <small>真实正常脑 MRI 教学版</small>
+  <h1>先学会正常，才能可靠识别异常</h1>
+  <p>使用去标识的健康成人 3D T1w MPRAGE MRI，训练方向、三平面空间关系、正常脑结构与系统阅片顺序。</p>
+</section>
+
+<section class="notice">
+  <b>本版影像：</b>OpenNeuro NIMH Healthy Research Volunteer Dataset（ds005752），受试者 sub-ON00400，ses-01，MPRAGE T1w。本站保存同源 NIfTI 副本，避免跨站加载失败。影像用于教学，不代表对任何个体作临床诊断。
+</section>
+
+<section class="workspace">
+<div>
+  <h2>教学阅片器</h2>
+  <div id="status" class="status">正在从本站 <code>data/healthy-adult-t1w.nii.gz</code> 载入真实 T1w MRI……</div>
+  <div class="papaya" data-params="params"></div>
+  <details>
+    <summary>阅片器怎么操作？</summary>
+    <p><b>滚轮：</b>连续换层；<b>十字线：</b>三个平面同步定位；<b>Axial / Coronal / Sagittal：</b>分别对应轴位、冠状位、矢状位。第一次学习不要只盯单层，要从一端连续浏览到另一端。</p>
+  </details>
+</div>
+
+<aside>
+  <h2>跟着我看</h2>
+  <div class="lesson"><b>01｜先确认方向</b><p>先辨认 Axial、Coronal、Sagittal。建立前后、左右、上下的空间概念，再开始认结构。</p><label><input type="checkbox"> 已完成三平面浏览</label></div>
+  <div class="lesson"><b>02｜脑室系统</b><p>寻找左右侧脑室，再向中线观察第三脑室。注意脑室的对称性、位置及与深部灰质的关系。</p><button onclick="tip('t1')">显示提示</button></div>
+  <div class="lesson"><b>03｜深部结构</b><p>观察丘脑与基底节区。现阶段重点是“能定位”，不要求一次记住所有核团边界。</p><button onclick="tip('t2')">显示提示</button></div>
+  <div class="lesson"><b>04｜中线结构</b><p>切到矢状位，寻找胼胝体、第三脑室区域、脑干，并建立幕上—幕下关系。</p><button onclick="tip('t3')">显示提示</button></div>
+  <div class="lesson"><b>05｜后颅窝</b><p>观察脑干与小脑。比较两侧小脑半球，并留意第四脑室所在区域。</p><button onclick="tip('t4')">显示提示</button></div>
+  <div class="lesson"><b>06｜系统性正常判断</b><p>按“对称性 → 中线 → 脑室 → 脑实质 → 脑干/小脑 → 脑沟脑池”顺序重新浏览一次。</p></div>
+  <div id="tipbox" class="tipbox">点击“显示提示”后，这里给出定位线索。</div>
+</aside>
+</section>
+
+<section class="quiz">
+<h2>正常脑 MRI 自测</h2>
+<div class="q"><b>1. T1w 图像中，正常脑脊液通常表现为：</b>
+<label><input type="radio" name="q1" value="a"> 高信号</label>
+<label><input type="radio" name="q1" value="b"> 低信号</label>
+<label><input type="radio" name="q1" value="c"> 与白质相同</label></div>
+<div class="q"><b>2. 学习正常脑 MRI 时，较合理的第一步是：</b>
+<label><input type="radio" name="q2" value="a"> 立即寻找疾病名称</label>
+<label><input type="radio" name="q2" value="b"> 先确认序列、方向并系统浏览</label>
+<label><input type="radio" name="q2" value="c"> 只看一张轴位图</label></div>
+<div class="q"><b>3. 判断是否存在占位效应时，应特别观察：</b>
+<label><input type="radio" name="q3" value="a"> 中线、脑室及脑沟脑池是否受压或移位</label>
+<label><input type="radio" name="q3" value="b"> 只看颅骨</label>
+<label><input type="radio" name="q3" value="c"> 只比较灰白质亮度</label></div>
+<button class="primary" onclick="grade()">提交自测</button>
+<div id="result" class="result"></div>
+</section>
+
+<section class="source">
+<h2>影像来源与使用边界</h2>
+<p><b>数据集：</b>NIMH Healthy Research Volunteer Dataset，OpenNeuro ds005752；<b>影像：</b>sub-ON00400 / ses-01 / acq-MPRAGE_T1w；<b>格式：</b>NIfTI-1；<b>矩阵：</b>208 × 256 × 256；<b>体素：</b>1 × 1 × 1 mm；<b>许可：</b>CC0。数据集提供的是研究志愿者影像，适合正常解剖教学，但“健康研究志愿者”不等同于临床影像报告逐项确认“完全正常”。</p>
+<p><b>文件完整性：</b>SHA-256 <code>0addf7cdb2298eee003375b3bf5d029f3af678cdf61aadf63e5f17bb2b6c9f79</code></p>
+</section>
+</main>
+<footer>
+<strong>软件开发：苏裕盛 教授 / 医学博士</strong>
+<div>支持单位：宁德师范学院医学院</div>
+<p>仅供医学教育与影像判读训练，不用于临床诊断、治疗决策或患者个体化医疗建议。</p>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+MedImage Tutor V0.3.3 data provenance
+
+Dataset: NIMH Healthy Research Volunteer Dataset
+OpenNeuro accession: ds005752
+Subject: sub-ON00400
+Session: ses-01
+Source filename: sub-ON00400_ses-01_acq-MPRAGE_T1w.nii.gz
+Local filename: healthy-adult-t1w.nii.gz
+Modality/acquisition: 3D T1-weighted MPRAGE
+Format: NIfTI-1
+Matrix: 208 x 256 x 256
+Voxel size: 1 x 1 x 1 mm
+Dataset license: CC0
+SHA-256: 0addf7cdb2298eee003375b3bf5d029f3af678cdf61aadf63e5f17bb2b6c9f79
+
+Teaching note:
+This is research-volunteer imaging for anatomy education. “Healthy research volunteer” should not be
+presented as equivalent to a complete clinical radiology determination of “no abnormality.”
