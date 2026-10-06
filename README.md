@@ -1,16 +1,13 @@
-# MedImage Tutor V0.4｜MRI 序列识别训练
+# MedImage Tutor V0.4.2
 
-## 本版目标
-同一受试者、同一 session 比较 T1w / T2w / FLAIR，采用“盲判 → 信号线索 → 判断 → 用途”的训练流程。
+修复 V0.4 Papaya 动态初始化失败。页面启动时固定创建三个 Papaya 容器，A/B/C 切换只控制显示，不再动态销毁/重建阅片器。
 
-## 数据
-OpenNeuro ds005752，sub-ON00400 / ses-01，CC0。
+数据：OpenNeuro ds005752，sub-ON00400 / ses-01，T1w + T2w + FLAIR，CC0。
 
-- T1w: MPRAGE
-- T2w: CUBE
-- FLAIR: 3dCUBE
-
-三个 NIfTI 均已作为同源文件放在 `data/` 中，避免跨站影像加载。
-
-## 上传
-解压 ZIP 后，将 `index.html`、`style.css`、`app.js`、`README.md` 和整个 `data/` 文件夹上传到 GitHub 仓库根目录。
+上传：解压后将全部文件和 data 文件夹上传覆盖仓库根目录。
+## V0.4.2 手机适配
+- 手机端“当前序列”改为独立一行，避免越界。
+- A/B/C 三按钮改为三等分布局。
+- 限制 Papaya 容器、canvas 与页面最大宽度，防止横向溢出。
+- 切换序列、旋转屏幕或改变窗口尺寸后触发阅片器重新适配。
+- 桌面布局保持双栏。

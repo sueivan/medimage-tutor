@@ -1,25 +1,19 @@
-const seqs={
- A:{file:"data/t2w.nii.gz",answer:"T2w",feature:"CSF 明显高信号；灰质相对白质偏亮。",use:"T2w：对含水量增加较敏感，是观察水肿、炎症及多种病变信号的重要基础序列。"},
- B:{file:"data/t1w.nii.gz",answer:"T1w",feature:"CSF 低信号；白质相对灰质偏亮。",use:"T1w：解剖结构显示清楚，常用于结构评估、体积/萎缩观察，并作为增强前后比较基础。"},
- C:{file:"data/flair.nii.gz",answer:"FLAIR",feature:"CSF 被抑制呈暗，但脑实质仍保留明显 T2 加权对比。",use:"FLAIR：抑制自由水后，可突出邻近脑室和脑沟的 T2 高信号病变。"}
-};
-let current="A", papayaContainer=null;
-function buildViewer(k){
- current=k; document.getElementById("state").textContent="当前：序列 "+k+"（名称隐藏）";
- document.getElementById("feedback").textContent="先观察影像，再提交。";document.getElementById("use").textContent="答对后显示该序列的核心用途。";
- document.getElementById("guess").value="";
- document.querySelectorAll(".tabs button").forEach((b,i)=>b.classList.toggle("active",["A","B","C"][i]===k));
- const host=document.getElementById("viewer");host.innerHTML='<div class="papaya" data-params="params"></div>';
- window.params=[];params["images"]=[seqs[k].file];params["worldSpace"]=true;params["showOrientation"]=true;params["orthogonal"]=true;params["allowScroll"]=true;params["showControlBar"]=true;
- params["loadingComplete"]=()=>document.getElementById("load").textContent="✓ 序列 "+k+" 已载入。请先盲判，再提交。";
- papaya.Container.startPapaya();
+const seq={A:{a:"T2w",f:"CSF 高信号；灰质相对白质偏亮。",u:"T2w：对含水量增加较敏感。"},B:{a:"T1w",f:"CSF 低信号；白质相对灰质偏亮。",u:"T1w：适合解剖结构与结构评估。"},C:{a:"FLAIR",f:"CSF 被抑制呈暗，同时保留 T2 加权对比。",u:"FLAIR：有助突出邻近 CSF 的 T2 高信号病变。"}};let cur="A";
+function pick(k){cur=k;document.getElementById("state").textContent="当前：序列 "+k+"（名称隐藏）";document.querySelectorAll(".pane").forEach(x=>x.classList.remove("active"));document.getElementById("pane"+k).classList.add("active");document.querySelectorAll(".tabs button").forEach((b,i)=>b.classList.toggle("active",["A","B","C"][i]===k));document.getElementById("guess").value="";document.getElementById("feedback").textContent="先观察影像，再提交。";document.getElementById("use").textContent="答对后显示核心用途。"}
+function judge(){let g=document.getElementById("guess").value,s=seq[cur],f=document.getElementById("feedback");if(!g){f.textContent="请先选择。";return}if(g===s.a){f.innerHTML="✓ 正确：<b>"+s.a+"</b>。"+s.f;document.getElementById("use").textContent=s.u}else f.innerHTML="✗ 再看两个线索：<b>CSF 亮/暗</b>和<b>灰白质关系</b>。";}
+function fitPapayaMobile(){
+  if(window.innerWidth>700) return;
+  document.querySelectorAll(".pane.active .papayaContainer").forEach(function(el){
+    el.style.maxWidth="100%";
+    el.style.width="100%";
+    el.style.overflow="hidden";
+  });
+  setTimeout(function(){
+    window.dispatchEvent(new Event("resize"));
+  },120);
 }
-function pick(k){buildViewer(k)}
-function submitGuess(){
- const g=document.getElementById("guess").value,s=seqs[current],f=document.getElementById("feedback");
- if(!g){f.textContent="请先选择 T1w、T2w 或 FLAIR。";return}
- if(g===s.answer){f.innerHTML="✓ 正确：<b>"+s.answer+"</b>。"+s.feature;document.getElementById("use").textContent=s.use}
- else{f.innerHTML="✗ 暂不揭晓答案。再看两个线索：<b>脑脊液亮/暗</b>，以及<b>灰质与白质谁更亮</b>。"}
-}
-function miniQuiz(){const x=document.querySelector('input[name="q"]:checked'),r=document.getElementById("qresult");if(!x){r.textContent=" 请先选择。";return}r.textContent=x.value==="T2w"?" ✓ 正确。":" ✗ 再看“CSF 很亮”这一关键线索。"}
-window.addEventListener("load",()=>buildViewer("A"));
+const oldPick=pick;
+pick=function(k){oldPick(k);setTimeout(fitPapayaMobile,180);}
+window.addEventListener("resize",fitPapayaMobile);
+window.addEventListener("orientationchange",function(){setTimeout(fitPapayaMobile,300);});
+window.addEventListener("load",function(){setTimeout(fitPapayaMobile,500);});
