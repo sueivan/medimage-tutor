@@ -1,18 +1,25 @@
-MedImage Tutor V0.3.3 data provenance
+MedImage Tutor V0.4 data provenance
 
-Dataset: NIMH Healthy Research Volunteer Dataset
-OpenNeuro accession: ds005752
-Subject: sub-ON00400
-Session: ses-01
-Source filename: sub-ON00400_ses-01_acq-MPRAGE_T1w.nii.gz
-Local filename: healthy-adult-t1w.nii.gz
-Modality/acquisition: 3D T1-weighted MPRAGE
-Format: NIfTI-1
-Matrix: 208 x 256 x 256
-Voxel size: 1 x 1 x 1 mm
+Dataset: OpenNeuro ds005752 (NIMH Healthy Research Volunteer Dataset)
+Subject/session: sub-ON00400 / ses-01
 Dataset license: CC0
-SHA-256: 0addf7cdb2298eee003375b3bf5d029f3af678cdf61aadf63e5f17bb2b6c9f79
 
-Teaching note:
-This is research-volunteer imaging for anatomy education. “Healthy research volunteer” should not be
-presented as equivalent to a complete clinical radiology determination of “no abnormality.”
+T1w: t1w.nii.gz
+  size: 11564518 bytes
+  matrix: 208 x 256 x 256
+  voxel: 1 x 1 x 1 mm
+  SHA-256: 0addf7cdb2298eee003375b3bf5d029f3af678cdf61aadf63e5f17bb2b6c9f79
+
+T2w: t2w.nii.gz
+  size: 8161367 bytes
+  matrix: 204 x 256 x 256
+  voxel: 1 x 1 x 1 mm
+  SHA-256: ea7e1d736c603e12f9aab4e9d92586acca2f4aa66cd430d019faf0bad2c59f06
+
+FLAIR: flair.nii.gz
+  size: 9258362 bytes
+  matrix: 204 x 256 x 256
+  voxel: 1 x 1 x 1 mm
+  SHA-256: 9939dcdeb21ab1742735daab170faead07f7eff442afd2a84605da2dd753c2e4
+
+Teaching boundary: healthy research volunteer data are used for sequence/anatomy education; this is not a clinical diagnostic report.

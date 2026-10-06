@@ -1,16 +1,25 @@
-function tip(id){
- const tips={
- t1:"轴位连续滚动时，先找成对的侧脑室。T1w 中脑脊液通常较暗；不要只凭一个切面判断结构。",
- t2:"在侧脑室附近建立深部灰质的空间关系。先辨认丘脑的大致位置，再逐步学习基底节各组成部分。",
- t3:"正中矢状位最适合建立胼胝体、脑干及中线结构的整体关系。先看轮廓，再看局部。",
- t4:"后颅窝重点看脑干、小脑和第四脑室区域，并比较左右是否基本对称。"
- };
- document.getElementById("tipbox").textContent=tips[id]||"";
+const seqs={
+ A:{file:"data/t2w.nii.gz",answer:"T2w",feature:"CSF 明显高信号；灰质相对白质偏亮。",use:"T2w：对含水量增加较敏感，是观察水肿、炎症及多种病变信号的重要基础序列。"},
+ B:{file:"data/t1w.nii.gz",answer:"T1w",feature:"CSF 低信号；白质相对灰质偏亮。",use:"T1w：解剖结构显示清楚，常用于结构评估、体积/萎缩观察，并作为增强前后比较基础。"},
+ C:{file:"data/flair.nii.gz",answer:"FLAIR",feature:"CSF 被抑制呈暗，但脑实质仍保留明显 T2 加权对比。",use:"FLAIR：抑制自由水后，可突出邻近脑室和脑沟的 T2 高信号病变。"}
+};
+let current="A", papayaContainer=null;
+function buildViewer(k){
+ current=k; document.getElementById("state").textContent="当前：序列 "+k+"（名称隐藏）";
+ document.getElementById("feedback").textContent="先观察影像，再提交。";document.getElementById("use").textContent="答对后显示该序列的核心用途。";
+ document.getElementById("guess").value="";
+ document.querySelectorAll(".tabs button").forEach((b,i)=>b.classList.toggle("active",["A","B","C"][i]===k));
+ const host=document.getElementById("viewer");host.innerHTML='<div class="papaya" data-params="params"></div>';
+ window.params=[];params["images"]=[seqs[k].file];params["worldSpace"]=true;params["showOrientation"]=true;params["orthogonal"]=true;params["allowScroll"]=true;params["showControlBar"]=true;
+ params["loadingComplete"]=()=>document.getElementById("load").textContent="✓ 序列 "+k+" 已载入。请先盲判，再提交。";
+ papaya.Container.startPapaya();
 }
-function grade(){
- const ans={q1:"b",q2:"b",q3:"a"}; let score=0,done=0;
- Object.keys(ans).forEach(q=>{const x=document.querySelector('input[name="'+q+'"]:checked');if(x){done++;if(x.value===ans[q])score++;}});
- const r=document.getElementById("result");
- if(done<3){r.textContent="请先完成 3 题。";return;}
- r.innerHTML="得分："+score+"/3。"+(score===3?" 已掌握本节核心阅读原则。":" 建议重新滚片并复习：T1w 脑脊液低信号；先确认序列和方向；占位效应要看中线、脑室和脑沟脑池。");
+function pick(k){buildViewer(k)}
+function submitGuess(){
+ const g=document.getElementById("guess").value,s=seqs[current],f=document.getElementById("feedback");
+ if(!g){f.textContent="请先选择 T1w、T2w 或 FLAIR。";return}
+ if(g===s.answer){f.innerHTML="✓ 正确：<b>"+s.answer+"</b>。"+s.feature;document.getElementById("use").textContent=s.use}
+ else{f.innerHTML="✗ 暂不揭晓答案。再看两个线索：<b>脑脊液亮/暗</b>，以及<b>灰质与白质谁更亮</b>。"}
 }
+function miniQuiz(){const x=document.querySelector('input[name="q"]:checked'),r=document.getElementById("qresult");if(!x){r.textContent=" 请先选择。";return}r.textContent=x.value==="T2w"?" ✓ 正确。":" ✗ 再看“CSF 很亮”这一关键线索。"}
+window.addEventListener("load",()=>buildViewer("A"));

@@ -1,94 +1,56 @@
-<!doctype html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MedImage Tutor V0.3.3｜真实正常脑 MRI 教学版</title>
+<!doctype html><html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MedImage Tutor V0.4｜MRI 序列识别训练</title>
 <link rel="stylesheet" href="https://unpkg.com/papaya-viewer@1.0.1455/release/current/standard/papaya.css">
 <link rel="stylesheet" href="style.css">
-<script>
-var params = [];
-params["images"] = ["data/healthy-adult-t1w.nii.gz"];
-params["worldSpace"] = true;
-params["showOrientation"] = true;
-params["orthogonal"] = true;
-params["allowScroll"] = true;
-params["showControlBar"] = true;
-params["radiological"] = true;
-params["loadingComplete"] = function () {
-  var s=document.getElementById("status");
-  if(s){s.innerHTML="✓ 真实健康成人 T1w MRI 已载入。可滚轮换层，并观察轴位、冠状位、矢状位。";s.className="status ok";}
-};
-</script>
 <script src="https://unpkg.com/papaya-viewer@1.0.1455/release/current/standard/papaya.js"></script>
-</head>
-<body>
-<header>
-  <b>MedImage Tutor</b><span>医学影像判读学习助手</span><i>V0.3.3</i>
-</header>
+</head><body>
+<header><b>MedImage Tutor</b><span>医学影像判读学习助手</span><i>V0.4</i></header>
 <main>
-<section class="hero">
-  <small>真实正常脑 MRI 教学版</small>
-  <h1>先学会正常，才能可靠识别异常</h1>
-  <p>使用去标识的健康成人 3D T1w MPRAGE MRI，训练方向、三平面空间关系、正常脑结构与系统阅片顺序。</p>
-</section>
+<section class="hero"><small>MRI 序列识别训练</small><h1>不要背名称：先看信号，再判断序列</h1>
+<p>同一健康研究志愿者的 T1w、T2w、FLAIR。训练“脑脊液 → 灰白质关系 → 序列判断 → 适用场景”的读片路径。</p></section>
+<section class="notice"><b>训练原则：</b>先选择 A/B/C，不要先看答案。三个序列来自同一受试者 sub-ON00400、同一 ses-01，可减少个体解剖差异对比较的干扰。</section>
 
-<section class="notice">
-  <b>本版影像：</b>OpenNeuro NIMH Healthy Research Volunteer Dataset（ds005752），受试者 sub-ON00400，ses-01，MPRAGE T1w。本站保存同源 NIfTI 副本，避免跨站加载失败。影像用于教学，不代表对任何个体作临床诊断。
-</section>
-
-<section class="workspace">
-<div>
-  <h2>教学阅片器</h2>
-  <div id="status" class="status">正在从本站 <code>data/healthy-adult-t1w.nii.gz</code> 载入真实 T1w MRI……</div>
-  <div class="papaya" data-params="params"></div>
-  <details>
-    <summary>阅片器怎么操作？</summary>
-    <p><b>滚轮：</b>连续换层；<b>十字线：</b>三个平面同步定位；<b>Axial / Coronal / Sagittal：</b>分别对应轴位、冠状位、矢状位。第一次学习不要只盯单层，要从一端连续浏览到另一端。</p>
-  </details>
+<section class="trainer">
+<div class="viewerbox">
+<div class="topline"><h2>盲判区</h2><span id="state">当前：序列 A（名称隐藏）</span></div>
+<div class="tabs"><button class="active" onclick="pick('A')">序列 A</button><button onclick="pick('B')">序列 B</button><button onclick="pick('C')">序列 C</button></div>
+<div id="viewer"></div>
+<div class="load" id="load">正在载入序列 A……</div>
 </div>
-
 <aside>
-  <h2>跟着我看</h2>
-  <div class="lesson"><b>01｜先确认方向</b><p>先辨认 Axial、Coronal、Sagittal。建立前后、左右、上下的空间概念，再开始认结构。</p><label><input type="checkbox"> 已完成三平面浏览</label></div>
-  <div class="lesson"><b>02｜脑室系统</b><p>寻找左右侧脑室，再向中线观察第三脑室。注意脑室的对称性、位置及与深部灰质的关系。</p><button onclick="tip('t1')">显示提示</button></div>
-  <div class="lesson"><b>03｜深部结构</b><p>观察丘脑与基底节区。现阶段重点是“能定位”，不要求一次记住所有核团边界。</p><button onclick="tip('t2')">显示提示</button></div>
-  <div class="lesson"><b>04｜中线结构</b><p>切到矢状位，寻找胼胝体、第三脑室区域、脑干，并建立幕上—幕下关系。</p><button onclick="tip('t3')">显示提示</button></div>
-  <div class="lesson"><b>05｜后颅窝</b><p>观察脑干与小脑。比较两侧小脑半球，并留意第四脑室所在区域。</p><button onclick="tip('t4')">显示提示</button></div>
-  <div class="lesson"><b>06｜系统性正常判断</b><p>按“对称性 → 中线 → 脑室 → 脑实质 → 脑干/小脑 → 脑沟脑池”顺序重新浏览一次。</p></div>
-  <div id="tipbox" class="tipbox">点击“显示提示”后，这里给出定位线索。</div>
+<h2>四步判断法</h2>
+<div class="step"><b>01｜先看脑脊液</b><p>脑室和脑沟内的 CSF 是亮还是暗？这是最先看的线索。</p></div>
+<div class="step"><b>02｜再看灰白质</b><p>白质是否比灰质亮？不要只凭整体“亮不亮”判断。</p></div>
+<div class="step"><b>03｜判断序列</b>
+<select id="guess"><option value="">请选择</option><option>T1w</option><option>T2w</option><option>FLAIR</option></select>
+<button onclick="submitGuess()">提交判断</button></div>
+<div id="feedback" class="feedback">先观察影像，再提交。</div>
+<div class="step"><b>04｜回答用途</b><p id="use">答对后显示该序列的核心用途。</p></div>
 </aside>
 </section>
 
-<section class="quiz">
-<h2>正常脑 MRI 自测</h2>
-<div class="q"><b>1. T1w 图像中，正常脑脊液通常表现为：</b>
-<label><input type="radio" name="q1" value="a"> 高信号</label>
-<label><input type="radio" name="q1" value="b"> 低信号</label>
-<label><input type="radio" name="q1" value="c"> 与白质相同</label></div>
-<div class="q"><b>2. 学习正常脑 MRI 时，较合理的第一步是：</b>
-<label><input type="radio" name="q2" value="a"> 立即寻找疾病名称</label>
-<label><input type="radio" name="q2" value="b"> 先确认序列、方向并系统浏览</label>
-<label><input type="radio" name="q2" value="c"> 只看一张轴位图</label></div>
-<div class="q"><b>3. 判断是否存在占位效应时，应特别观察：</b>
-<label><input type="radio" name="q3" value="a"> 中线、脑室及脑沟脑池是否受压或移位</label>
-<label><input type="radio" name="q3" value="b"> 只看颅骨</label>
-<label><input type="radio" name="q3" value="c"> 只比较灰白质亮度</label></div>
-<button class="primary" onclick="grade()">提交自测</button>
-<div id="result" class="result"></div>
+<section class="compare">
+<h2>完成盲判后再看：三序列比较表</h2>
+<table><thead><tr><th>特征</th><th>T1w</th><th>T2w</th><th>FLAIR</th></tr></thead><tbody>
+<tr><td>脑脊液</td><td>暗</td><td>亮</td><td>被抑制，暗</td></tr>
+<tr><td>灰/白质</td><td>白质相对较亮</td><td>灰质相对较亮</td><td>近似 T2 对比，但 CSF 被压低</td></tr>
+<tr><td>核心价值</td><td>解剖、结构、萎缩及增强前后比较</td><td>含水量增加的病变通常敏感</td><td>突出邻近 CSF 的 T2 高信号病变，尤其脑室旁/皮质旁</td></tr>
+<tr><td>避免误区</td><td>CSF 暗不等于一定是 T1</td><td>“水亮”是线索，不是完整诊断</td><td>不是“所有液体都暗”；应理解为自由水信号抑制</td></tr>
+</tbody></table>
 </section>
 
-<section class="source">
-<h2>影像来源与使用边界</h2>
-<p><b>数据集：</b>NIMH Healthy Research Volunteer Dataset，OpenNeuro ds005752；<b>影像：</b>sub-ON00400 / ses-01 / acq-MPRAGE_T1w；<b>格式：</b>NIfTI-1；<b>矩阵：</b>208 × 256 × 256；<b>体素：</b>1 × 1 × 1 mm；<b>许可：</b>CC0。数据集提供的是研究志愿者影像，适合正常解剖教学，但“健康研究志愿者”不等同于临床影像报告逐项确认“完全正常”。</p>
-<p><b>文件完整性：</b>SHA-256 <code>0addf7cdb2298eee003375b3bf5d029f3af678cdf61aadf63e5f17bb2b6c9f79</code></p>
+<section class="quiz"><h2>序列识别小测</h2>
+<p><b>情境：</b>看到脑室 CSF 很亮，灰质较白质亮，首先考虑哪种基础序列？</p>
+<label><input type="radio" name="q" value="T1w"> T1w</label>
+<label><input type="radio" name="q" value="T2w"> T2w</label>
+<label><input type="radio" name="q" value="FLAIR"> FLAIR</label>
+<button onclick="miniQuiz()">提交</button><span id="qresult"></span>
+</section>
+
+<section class="source"><h2>数据来源与边界</h2>
+<p>OpenNeuro NIMH Healthy Research Volunteer Dataset（ds005752），sub-ON00400 / ses-01。使用原始 MPRAGE T1w、CUBE T2w、3dCUBE FLAIR NIfTI。数据集许可为 CC0。用于医学教育，不把“健康研究志愿者”表述为经临床放射学逐项确认“完全正常”。</p>
 </section>
 </main>
-<footer>
-<strong>软件开发：苏裕盛 教授 / 医学博士</strong>
-<div>支持单位：宁德师范学院医学院</div>
-<p>仅供医学教育与影像判读训练，不用于临床诊断、治疗决策或患者个体化医疗建议。</p>
-</footer>
-<script src="app.js"></script>
-</body>
-</html>
+<footer><strong>软件开发：苏裕盛 教授 / 医学博士</strong><div>支持单位：宁德师范学院医学院</div><p>仅供医学教育与影像判读训练，不用于临床诊断、治疗决策或患者个体化医疗建议。</p></footer>
+<script src="app.js"></script></body></html>
